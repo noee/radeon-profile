@@ -111,7 +111,7 @@ bool dXorg::daemonConnected() {
 
 void dXorg::figureOutGpuDataFilePaths(const QString &gpuName) {
     QString devicePath = "/sys/class/drm/" + gpuName + "/device/";
-    driverFiles.moduleParams = devicePath + "driver/module/holders/" + features.sysInfo.driverModuleString + "/parameters/";
+    driverFiles.moduleParams = devicePath + "driver/module/parameters/";
     driverFiles.debugfs_pm_info = "/sys/kernel/debug/dri/" + gpuName.right(1) + "/"+features.sysInfo.driverModuleString + "_pm_info"; // this path contains only index
     driverFiles.sysFs = DeviceSysFs(devicePath);
 
@@ -389,7 +389,7 @@ QString dXorg::findSysfsHwmonForGPU() {
 
 QList<QTreeWidgetItem *> dXorg::getModuleInfo() {
     QList<QTreeWidgetItem *> data;
-    QStringList modInfo = globalStuff::grabSystemInfo("modinfo -p "+features.sysInfo.driverModuleString);
+    QStringList modInfo = globalStuff::grabSystemInfo("/usr/sbin/modinfo -p "+features.sysInfo.driverModuleString);
     modInfo.sort();
 
     for (int i =0; i < modInfo.count(); i++) {

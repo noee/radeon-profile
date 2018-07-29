@@ -76,6 +76,10 @@ enum ForcePowerLevels {
     F_AUTO, F_LOW, F_HIGH, F_MANUAL, F_PROFILE_STANDARD, F_PROFILE_MIN_SCLK, F_PROFILE_MIN_MCLK, F_PROFILE_PEAK
 };
 
+enum class PowerProfileMode {
+    M_3D, M_POWER_SAVING, M_VIDEO, M_VR, M_COMPUTE, M_CUSTOM
+};
+
 enum class ClocksDataSource {
     IOCTL, PM_FILE, SOURCE_UNKNOWN
 };
@@ -183,7 +187,8 @@ struct DeviceSysFs {
     pp_sclk_od,
     pp_mclk_od,
     pp_dpm_sclk,
-    pp_dpm_mclk;
+    pp_dpm_mclk,
+    pp_power_profile_mode;
 
     DeviceSysFs() { }
 
@@ -197,6 +202,7 @@ struct DeviceSysFs {
         pp_mclk_od = devicePath + "pp_mclk_od";
         pp_dpm_sclk = devicePath + "pp_dpm_sclk";
         pp_dpm_mclk = devicePath + "pp_dpm_mclk";
+        pp_power_profile_mode = devicePath + "pp_power_profile_mode";
 
 
         if (!QFile::exists(power_method))
@@ -222,6 +228,9 @@ struct DeviceSysFs {
 
         if (!QFile::exists(pp_dpm_mclk))
             pp_dpm_mclk = "";
+
+        if (!QFile::exists(pp_power_profile_mode))
+            pp_power_profile_mode = "";
     }
 };
 

@@ -94,6 +94,7 @@ private slots:
     void on_btn_pwmAuto_clicked();
     void on_btn_pwmProfile_clicked();
     void setPowerLevelFromCombo();
+    void setPowerProfileMode();
     void on_btn_fanInfo_clicked();
     void on_btn_addFanStep_clicked();
     void on_btn_removeFanStep_clicked();

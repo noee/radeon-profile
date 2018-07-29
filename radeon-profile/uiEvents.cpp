@@ -90,6 +90,14 @@ void radeon_profile::setPowerLevelFromCombo() {
         ui->group_freq->setChecked(false);
 
     device.setForcePowerLevel((ForcePowerLevels)ui->combo_pLevel->currentIndex());
+    QTimer::singleShot(500, this, [this]{
+        ui->combo_pMode->setVisible(device.getCurrentPowerLevel() == dpm_manual);
+    });
+}
+
+void radeon_profile::setPowerProfileMode()
+{
+    device.setPowerProfileMode((PowerProfileMode)ui->combo_pMode->currentIndex());
 }
 
 void radeon_profile::resetMinMax() {

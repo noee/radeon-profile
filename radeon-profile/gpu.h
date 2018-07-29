@@ -31,12 +31,14 @@ public:
 
     char currentGpuIndex;
     QString currentPowerProfile, currentPowerLevel;
+    int currentPowerProfileMode;
 
     QList<QTreeWidgetItem *> getCardConnectors() const;
     QStringList getGLXInfo(QString gpuName) const;
     QList<QTreeWidgetItem *> getModuleInfo() const;
     QString getCurrentPowerLevel();
     QString getCurrentPowerProfile();
+    int getCurrentPowerProfileMode();
     void refreshPowerLevel();
 
     void getClocks();
@@ -47,6 +49,7 @@ public:
     void changeGpu(int index);
     void setPowerProfile(PowerProfiles _newPowerProfile);
     void setForcePowerLevel(ForcePowerLevels _newForcePowerLevel);
+    void setPowerProfileMode(PowerProfileMode newPowerProfileMode);
     void setPwmManualControl(bool manual);
     void setPwmValue(unsigned int value);
 

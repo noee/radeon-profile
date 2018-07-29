@@ -109,6 +109,7 @@ void radeon_profile::connectSignals()
     // fix for warrning: QMetaObject::connectSlotsByName: No matching signal for...
     connect(ui->combo_gpus,SIGNAL(currentIndexChanged(QString)),this,SLOT(gpuChanged()));
     connect(ui->combo_pLevel,SIGNAL(currentIndexChanged(int)),this,SLOT(setPowerLevelFromCombo()));
+    connect(ui->combo_pMode, SIGNAL(currentIndexChanged(int)), this, SLOT(setPowerProfileMode()));
     connect(&dpmGroup, SIGNAL(buttonClicked(int)), this, SLOT(setPowerLevel(int)));
     connect(timer,SIGNAL(timeout()),this,SLOT(timerEvent()));
 }
@@ -219,6 +220,7 @@ void radeon_profile::setupUiEnabledFeatures(const DriverFeatures &features, cons
         ui->cb_eventsTracking->setEnabled(false);
         ui->cb_eventsTracking->setChecked(false);
     }
+    ui->combo_pMode->setVisible(device.getCurrentPowerLevel() == dpm_manual);
 
     ui->tabs_systemInfo->setTabEnabled(3,data.contains(ValueID::CLK_CORE));
 
@@ -320,6 +322,7 @@ void radeon_profile::refreshUI() {
 
     if (device.getDriverFeatures().currentPowerMethod == PowerMethod::DPM) {
         ui->combo_pLevel->setCurrentText(device.currentPowerLevel);
+        ui->combo_pMode->setCurrentIndex(device.currentPowerProfileMode);
         if (device.currentPowerProfile == dpm_battery)
             ui->btn_dpmBattery->setChecked(true);
         else if (device.currentPowerProfile == dpm_balanced)
@@ -442,7 +445,6 @@ void radeon_profile::adjustFanSpeed() {
     float speed = (float)(hSpeed - lSpeed) / (float)(hTemperature - lTemperature)  * (device.gpuData.value(ValueID::TEMPERATURE_CURRENT).value - lTemperature)  + lSpeed;
 
     device.setPwmValue((speed < minFanStepsSpeed) ? minFanStepsSpeed : speed);
-
 }
 
 

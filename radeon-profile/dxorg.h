@@ -55,9 +55,11 @@ public:
     QList<QTreeWidgetItem *> getModuleInfo();
     QString getCurrentPowerLevel();
     QString getCurrentPowerProfile();
+    int getCurrentPowerProfileMode();
 
     void setPowerProfile(PowerProfiles newPowerProfile);
     void setForcePowerLevel(ForcePowerLevels newForcePowerLevel);
+    void setPowerProfileMode(PowerProfileMode newPowerProfileMode);
     void setPwmManualControl(bool manual);
     void setPwmValue(unsigned int value);
 

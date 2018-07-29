@@ -111,7 +111,7 @@ bool dXorg::daemonConnected() {
 
 void dXorg::figureOutGpuDataFilePaths(const QString &gpuName) {
     QString devicePath = "/sys/class/drm/" + gpuName + "/device/";
-    driverFiles.moduleParams = devicePath + "driver/module/holders/" + features.sysInfo.driverModuleString + "/parameters/";
+    driverFiles.moduleParams = devicePath + "driver/module/parameters/";
     driverFiles.debugfs_pm_info = "/sys/kernel/debug/dri/" + gpuName.right(1) + "/"+features.sysInfo.driverModuleString + "_pm_info"; // this path contains only index
     driverFiles.sysFs = DeviceSysFs(devicePath);
 
@@ -389,7 +389,7 @@ QString dXorg::findSysfsHwmonForGPU() {
 
 QList<QTreeWidgetItem *> dXorg::getModuleInfo() {
     QList<QTreeWidgetItem *> data;
-    QStringList modInfo = globalStuff::grabSystemInfo("modinfo -p "+features.sysInfo.driverModuleString);
+    QStringList modInfo = globalStuff::grabSystemInfo("/usr/sbin/modinfo -p "+features.sysInfo.driverModuleString);
     modInfo.sort();
 
     for (int i =0; i < modInfo.count(); i++) {
@@ -436,6 +436,23 @@ QString dXorg::getCurrentPowerProfile() {
     else
         return "err";
 
+}
+
+int dXorg::getCurrentPowerProfileMode()
+{
+    QFile ppm(driverFiles.sysFs.pp_power_profile_mode);
+    int ret = -1;
+    if (ppm.open(QIODevice::ReadOnly)) {
+        QStringList l = QString(ppm.readAll()).split('\n');
+        for (const auto i: l) {
+            if (i.contains("*")) {
+                ret = i.trimmed().left(1).toInt();
+                break;
+            }
+        }
+        ppm.close();
+    }
+    return ret;
 }
 
 QString dXorg::getCurrentPowerLevel() {
@@ -534,6 +551,15 @@ void dXorg::setForcePowerLevel(ForcePowerLevels newForcePowerLevel) {
         dcomm.sendCommand(createDaemonSetCmd(driverFiles.sysFs.power_dpm_force_performance_level, newValue));
     else
         setNewValue(driverFiles.sysFs.power_dpm_force_performance_level, newValue);
+}
+
+void dXorg::setPowerProfileMode(PowerProfileMode newPowerProfileMode)
+{
+    QString newValue = QString::number(static_cast<int>(newPowerProfileMode));
+    if (daemonConnected())
+        dcomm.sendCommand(createDaemonSetCmd(driverFiles.sysFs.pp_power_profile_mode, newValue));
+    else
+        setNewValue(driverFiles.sysFs.pp_power_profile_mode, newValue);
 }
 
 void dXorg::setPwmValue(unsigned int value) {

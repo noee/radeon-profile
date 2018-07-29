@@ -144,23 +144,8 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_13">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetMinimumSize</enum>
-        </property>
-        <property name="leftMargin">
-         <number>2</number>
-        </property>
-        <property name="topMargin">
-         <number>2</number>
-        </property>
-        <property name="rightMargin">
-         <number>2</number>
-        </property>
-        <property name="bottomMargin">
-         <number>2</number>
-        </property>
-        <item>
+       <layout class="QGridLayout" name="gridLayout_13">
+        <item row="0" column="0">
          <widget class="QToolButton" name="btn_dpmBattery">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -189,7 +174,7 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="1" column="0">
          <widget class="QToolButton" name="btn_dpmBalanced">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -218,7 +203,7 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="2" column="0">
          <widget class="QToolButton" name="btn_dpmPerformance">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -247,7 +232,7 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="3" column="0">
          <widget class="QComboBox" name="combo_pLevel">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -278,7 +263,63 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item row="4" column="0">
+         <widget class="QComboBox" name="combo_pMode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>160</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Monospace</family>
+            <pointsize>10</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Power level</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>3D</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power Saving</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Video</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>VR</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Compute</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item row="5" column="0">
          <spacer name="verticalSpacer_5">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -291,7 +332,7 @@
           </property>
          </spacer>
         </item>
-        <item>
+        <item row="6" column="0">
          <widget class="QToolButton" name="btn_fanControl">
           <property name="sizePolicy">
            <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
@@ -378,7 +419,7 @@
        <enum>QTabWidget::South</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="infoTab">
        <attribute name="title">
@@ -1078,7 +1119,7 @@
         <item>
          <widget class="QGroupBox" name="group_oc">
           <property name="title">
-           <string>Overclock</string>
+           <string>Overcloc&amp;k</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -1223,7 +1264,7 @@
         <item>
          <widget class="QGroupBox" name="group_freq">
           <property name="title">
-           <string>Manual frequency control</string>
+           <string>Manual fre&amp;quency control</string>
           </property>
           <property name="checkable">
            <bool>true</bool>
@@ -1502,7 +1543,7 @@
            </sizepolicy>
           </property>
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page"/>
           <widget class="QWidget" name="page_fixed">
@@ -1531,20 +1572,20 @@
                </font>
               </property>
               <property name="text">
-               <string>10%</string>
+               <string>0%</string>
               </property>
              </widget>
             </item>
             <item row="2" column="1">
              <widget class="QSlider" name="fanSpeedSlider">
               <property name="minimum">
-               <number>10</number>
+               <number>0</number>
               </property>
               <property name="maximum">
                <number>100</number>
               </property>
               <property name="value">
-               <number>20</number>
+               <number>0</number>
               </property>
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -3288,8 +3329,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>777</width>
-             <height>572</height>
+             <width>744</width>
+             <height>622</height>
             </rect>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_27">

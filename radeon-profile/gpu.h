@@ -36,10 +36,11 @@ public:
     QList<QTreeWidgetItem *> getCardConnectors() const;
     QStringList getGLXInfo(QString gpuName) const;
     QList<QTreeWidgetItem *> getModuleInfo() const;
-    QString getCurrentPowerLevel();
+    QString getCurrentPowerLevel() const;
     QString getCurrentPowerProfile();
     int getCurrentPowerProfileMode();
     void refreshPowerLevel();
+    bool isPPModeAvailable() const;
 
     void getClocks();
     void getTemperature();

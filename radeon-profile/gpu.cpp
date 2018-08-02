@@ -239,7 +239,7 @@ QStringList gpu::getGLXInfo(QString gpuName) const {
     return data;
 }
 
-QString gpu::getCurrentPowerLevel() {
+QString gpu::getCurrentPowerLevel() const {
     return driverHandler->getCurrentPowerLevel().trimmed();
 }
 
@@ -254,6 +254,11 @@ void gpu::refreshPowerLevel() {
     currentPowerLevel = getCurrentPowerLevel();
     currentPowerProfile = getCurrentPowerProfile();
     currentPowerProfileMode = getCurrentPowerProfileMode();
+}
+
+bool gpu::isPPModeAvailable() const
+{
+    return currentPowerProfileMode != -1 && getCurrentPowerLevel() == dpm_manual;
 }
 
 void gpu::setPowerProfile(PowerProfiles newPowerProfile) {

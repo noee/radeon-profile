@@ -220,7 +220,7 @@ void radeon_profile::setupUiEnabledFeatures(const DriverFeatures &features, cons
         ui->cb_eventsTracking->setEnabled(false);
         ui->cb_eventsTracking->setChecked(false);
     }
-    ui->combo_pMode->setVisible(device.getCurrentPowerLevel() == dpm_manual);
+    ui->combo_pMode->setVisible(device.isPPModeAvailable());
 
     ui->tabs_systemInfo->setTabEnabled(3,data.contains(ValueID::CLK_CORE));
 

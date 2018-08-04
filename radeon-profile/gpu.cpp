@@ -30,14 +30,14 @@ extern "C" {
 // List found through pkgfile --verbose --search pnp.ids (on arch linux)
 #define PNP_ID_FILE_COUNT 8
 static const char * pnpIdFiles [PNP_ID_FILE_COUNT] = {
+    "/usr/share/hwdata/pnp.ids",
     "/usr/share/misc/pnp.ids",
     "/usr/share/libgnome-desktop-3.0/pnp.ids",
     "/usr/share/libgnome-desktop/pnp.ids",
     "/usr/share/libcinnamon-desktop/pnp.ids",
     "/usr/share/dispcalGUI/pnp.ids",
     "/usr/share/DisplayCAL/pnp.ids",
-    "/usr/share/libmate-desktop/pnp.ids",
-    "/usr/share/hwdata/pnp.ids"
+    "/usr/share/libmate-desktop/pnp.ids"
 };
 
 bool gpu::daemonConnected() {
@@ -399,7 +399,6 @@ QString translatePnpId(const QString pnpId){
 // See http://en.wikipedia.org/wiki/Extended_display_identification_data#EDID_1.3_data_format
 // For reference: https://github.com/KDE/libkscreen/blob/master/src/edid.cpp#L262-L286
 QString getMonitorName(const quint8 *EDID){
-    QString monitorName;
 
     //Get the vendor PnP ID
     QString pnpId, modelName;
@@ -407,17 +406,13 @@ QString getMonitorName(const quint8 *EDID){
     pnpId[1] = 'A' + ((EDID[EDID_OFFSET_PNP_ID + 0] & 0x3) * 8) + ((EDID[EDID_OFFSET_PNP_ID + 1] & 0xe0) / 32) - 1;
     pnpId[2] = 'A' + (EDID[EDID_OFFSET_PNP_ID + 1] & 0x1f) - 1;
 
-    //Translate the PnP ID into human-readable vendor name
-    monitorName.append(translatePnpId(pnpId));
-
     // Get the model name
     for (uint i = EDID_OFFSET_DATA_BLOCKS; i <= EDID_OFFSET_LAST_BLOCK; i += 18)
         if(EDID[i+3] == EDID_DESCRIPTOR_PRODUCT_NAME)
             modelName = QString::fromLocal8Bit((const char*)&EDID[i+5], 13).simplified();
 
-    monitorName.append(modelName.isEmpty() ? " - Model unknown" : ' ' + modelName);
-
-    return monitorName;
+    //Translate the PnP ID into human-readable vendor name, append with model name
+    return translatePnpId(pnpId) + (modelName.isEmpty() ? " - Model unknown" : QString(" %1").arg(modelName));
 }
 
 // Function that returns the right info struct for the RRMode it receives
